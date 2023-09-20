@@ -3,9 +3,6 @@ printSubstrings = False
 printOccurence = False
 customCipher = False
 frequencyAnalysis = False
-import VigenereDecrypt as VD
-import VigenereEncrypt as VE
-
 
     # Help
 def Help():
@@ -44,6 +41,9 @@ def inputss(self):
     self.findSubStrings(ciphertext,n)
 
 def main():
+    import VigenereDecrypt as VD
+    import VigenereEncrypt as VE
+
     Help()
     Flags()
     while(True):
