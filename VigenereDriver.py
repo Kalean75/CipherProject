@@ -41,8 +41,9 @@ def inputss(self):
     self.findSubStrings(ciphertext,n)
 
 def main():
-    import VigenereDecrypt as VD
-    import VigenereEncrypt as VE
+    from VigenereDecrypt import VigenereDecrypt as VD
+    from VigenereEncrypt import VigenereEncrypt as VE
+    
 
     Help()
     Flags()

@@ -9,7 +9,7 @@ class VigenereEncrypt:
         ciphertext = ciphertext.upper()
         encrypted = ''
         for i, ch in enumerate(ciphertext):
-            encrypted += self.shiftLetter(self,ch, key[i % len(key)])
+            encrypted += self.shiftLetter(ch, key[i % len(key)])
             f = open("cipher.txt", "w")
             f.write("Ciphertext: " + ciphertext + "\n")
             f.write("key: " + key + "\n")
