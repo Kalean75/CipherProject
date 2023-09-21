@@ -11,9 +11,9 @@ class Encrypt:
         for i, ch in enumerate(ciphertext):
             encrypted += self._shiftLetter(ch, key[i % len(key)])
             f = open("cipher.txt", "w")
-            f.write("Ciphertext: " + ciphertext + "\n")
-            f.write("key: " + key + "\n")
-            f.write("Encrypted: " + encrypted + "\n")
+            f.write(ciphertext + "\n")
+            f.write(key + "\n")
+            f.write(encrypted + "\n")
             f.close()
         return encrypted
 

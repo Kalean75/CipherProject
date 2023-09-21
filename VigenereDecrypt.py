@@ -186,6 +186,12 @@ class Decrypt:
         decrypted = ''
         for i, ch in enumerate(ciphertext):
             decrypted += self.unshiftLetter(ch, key[i % len(key)])
+        
+            f = open("cipherDecrypt.txt", "w")
+            f.write("Ciphertext: " + ciphertext + "\n")
+            f.write("key: " + key + "\n")
+            f.write("Decrypted: " + decrypted + "\n")
+            f.close()
         return decrypted
 
     def unshiftLetter(self,letter, keyLetter):
