@@ -1,19 +1,19 @@
-class VigenereEncrypt:
+class Encrypt:
 
-    def __init__(self, ciphertext,key):
-        self.ciphertext = ciphertext
-        self.key = key
-        print(key)
+    def __init__(self):
+        #self.ciphertext = ciphertext
+        #self.key = key
+        return
     
     def encryptVigenere(self,ciphertext, key):
         ciphertext = ciphertext.upper()
         encrypted = ''
         for i, ch in enumerate(ciphertext):
-            encrypted += self.shiftLetter(ch, key[i % len(key)])
+            encrypted += self._shiftLetter(ch, key[i % len(key)])
             f = open("cipher.txt", "w")
             f.write("Ciphertext: " + ciphertext + "\n")
             f.write("key: " + key + "\n")
-            f.write("Encrypted: " + ciphertext + "\n")
+            f.write("Encrypted: " + encrypted + "\n")
             f.close()
         return encrypted
 

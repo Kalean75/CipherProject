@@ -1,9 +1,9 @@
-class VigenereDecrypt:
+class Decrypt:
     import re
-    def __init__(self, countSubstrings,findSubStrings,printSubstrings):
-        self.countSubstrings = countSubstrings
-        self.findSubStrings = findSubStrings
-        self.printSubstrings = printSubstrings
+    def __init__(self, printSS,printOccurrence,frequencyAnalysis):
+        self.printOccurr = printOccurrence
+        self.printSS = printSS
+        self.frequencyAnalysis = frequencyAnalysis
 
     # Print text
     def printtext(self,text):
@@ -22,7 +22,7 @@ class VigenereDecrypt:
         num = 23
         for string in nchars:
             count+=1
-            if self.printSubstrings:
+            if self.printSS:
                 if num%count==0:
                     print(string + "\n")
                     num+=23
@@ -167,7 +167,7 @@ class VigenereDecrypt:
         count = 1
         #Sort by occurrence
         for key, value in sorted(dict.items(),key=lambda x:x[1], reverse=True):
-            if printOccurence:
+            if self.printOccurr:
                     if num%count==0:
                         print(key + ":" + str(value) , end = "\n")
                         num+=6
