@@ -30,7 +30,7 @@ def Flags():
         return
 
 #substring size
-def inputss(self):
+def inputss(VD,cipherText):
     while(True):
         try:
             n = int(input("Enter size of substrings to search for "))
@@ -40,7 +40,7 @@ def inputss(self):
             break
         except ValueError:
             print("Please enter a valid Integer\n")
-    self.findSubStrings(ciphertext,n)
+    VD.findSubStrings(cipherText,n)
 
 def main():
     
@@ -53,8 +53,8 @@ def CommandMenu():
     from VigenereEncrypt import Encrypt as VE
     f = open("cipher.txt")
     ciphertextList = f.readlines()
-    ciphertext = ciphertextList[2]
-    defKey = ciphertextList[1]
+    ciphertext = ciphertextList[2].strip()
+    defKey = ciphertextList[1].strip()
     if ciphertext == " ":
         ciphertext = "ELFMASBQDXISZMNMHIBFEFQIMEUVNGLMLRETHAZAQPPDOTEGDEDONLYVZJNWHCKBLPPQWDQZZGFFUKDWCIXWPZKKSIDYBGBATBUMOWFMYGFBPKYVELFHRHBMDMESJLQMZVHSXMCPDIOWKJKLOVFGOWCBSIOOPAYVDEZWJYKORVFGOAYVHMMZJGDAEEORWYKQYWUYQOKQEXISZMNMCIUINFCBZLJGWHKZEQFBPORMCIVDKFOVEISWJYKVOGMCOAXOELFRKGBPPMTDNGWXEPZUNSLJPHCMPOYUPRXVKXYZNIIWIAXBZXISXSDPCSPAWFNASSWSDACPPEEWJLRMESJZALDPPCESISXLXSOSUGGMOXPXWUUQPXSSAZYZYWBMEFQBSEUHDWNCOITKEXOJFROMYDKQXIEVAOKARSPRBGBQEFFTKJOWYIPTPZOBSYHGQJSVLXFGKFDPPHVRAKBCRWBMEFQMGISHDMCBZHFOZTOIEWMSXGGAVMCSSAVLPVFRPZOLFHFQKFFQYGFGPZOUELBHPZOGSEWSPZOECSOULWBAZRBGDWSAYXNONJSMOEORYSXBASTGETVGASTGAKCBSIBAKMXBZJNCJWIBSIZOOCPWCPPCGAXOLVPIJVDPPJJFOLDPFKSSWDSHPWUVAQRIGINOZWKUTWUOGWKVOQVGPZKDPXISSJYVRPFPKOCSTVFUWJNTPWTHDWIJCIBYKFOWQLJGXSDPCSPAPAVMDFFTKJOTPEWWJYDPPHVRAUKTWWBTPWBBSINGWQSVREUZASCBTENVKMCMMVPYAFDPPHVRAEOMEWVDSADPSMTPKOVQYKUSWEKBELFZKUKTLPMSUSXLEEMYOLYBSINOXGEBSMTJEGVMYXFBYGEVEISKWDDMCWPPYZKSCIBQPKGQELBBCWBIYHWSJYOIYGFCJZSAXMORKXDMYWQSWCSVRSGVEKDQXITSNNOLTRWWALXIXXPFADKBPXPHDWSADYFGHGGETXUSZLRMZHPFAVYVLPERKFXGVISOXSDAZWPTPWXMYXFFEFQKZRWSNKKBTSOGDSVNHEZHDJYCRLQWLWCQYFVHEKZZZQQHHQDWWHZCQSBMZYUCBQYCCIMSIWXBMCXOHLOZ"
         defKey="LEBOWSKI"
@@ -79,7 +79,8 @@ def CommandMenu():
         elif string=="-h":
                     Help()
         elif string=="-fss":
-                    inputss()
+                    Vd = VD(printSS = printSubstrings,printOccurrence = printOccurence, frequencyAnalysis = frequencyAnalysis, cipherText=ciphertext)
+                    inputss(Vd,ciphertext)
                     break
         elif string=="-f":
                     Flags()
@@ -92,7 +93,7 @@ def CommandMenu():
                 customCipher = False
                 print("Using a default cipher: " + str(customCipher))
         elif string=="-vdc":
-            Vd = VD(printSS = printSubstrings,printOccurrence = printOccurence, frequencyAnalysis = frequencyAnalysis)
+            Vd = VD(printSS = printSubstrings,printOccurrence = printOccurence, frequencyAnalysis = frequencyAnalysis, cipherText=ciphertext)
             if(customCipher):
                 print("Cipher is , ", newCipher)
                 keyString = input("Enter the key ")

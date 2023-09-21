@@ -1,9 +1,10 @@
 class Decrypt:
     import re
-    def __init__(self, printSS,printOccurrence,frequencyAnalysis):
+    def __init__(self, printSS,printOccurrence,frequencyAnalysis, cipherText):
         self.printOccurr = printOccurrence
         self.printSS = printSS
         self.frequencyAnalysis = frequencyAnalysis
+        self.cipherText = cipherText
 
     # Print text
     def printtext(self,text):
@@ -40,7 +41,7 @@ class Decrypt:
 
     #finds the distance between occurences of the most common substring
     def findLengthBetweenSubstrings(self,substring):
-        splitText = self.ciphertext.split(substring)
+        splitText = self.cipherText.split(substring)
         substringLengths = [None] * (len(splitText) - 2)
         global printOccurence
         global frequencyAnalysis
@@ -61,7 +62,7 @@ class Decrypt:
             print(len(length) +len(substring))#- len(substring))
         if len(substringLengths) < 2:
             print("Not enough occurrences to determine likely key length. checking with substring length " + str(len(substring)-1))
-            self.findSubStrings(self.ciphertext,len(substring)-1)
+            self.findSubStrings(self.cipherText,len(substring)-1)
         else:
             commonDivisor = substringLengths[0]
             for number in substringLengths[1::]:
@@ -72,7 +73,7 @@ class Decrypt:
             count = 0
             keyParse = []
             while count < commonDivisor:
-                keyParse.append(self.parseText(self.ciphertext,commonDivisor,count))
+                keyParse.append(self.parseText(self.cipherText,commonDivisor,count))
                 count +=1
 
             self.countFrequencyinBlocks(keyParse,commonDivisor)
@@ -145,6 +146,7 @@ class Decrypt:
             alphdict = { "A":0, "B": 0, "C": 0, "D": 0, "E": 0, "F": 0,"G": 0, "H": 0 , "I": 0, "J": 0, "K": 0, "L": 0,
     "M": 0, "N": 0, "O": 0, "P": 0, "Q": 0, "R": 0,"S": 0, "T": 0, "U": 0, "V": 0, "W": 0, "X": 0,"Y": 0, "Z": 0 }
             for char in word:
+                print(word)
                 alphdict[char] += 1
             dict["KeyLetter" + str(numKeyLetters)] = alphdict
             numKeyLetters += 1
