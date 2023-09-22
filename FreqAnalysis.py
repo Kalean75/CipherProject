@@ -1,5 +1,5 @@
 plaintext = "ethicslawanduniversitypolicieswarningtodefendasystemyouneedtobeabletothinklikeanattackerandthatincludesunderstandingtechniquesthatcanbeusedtocompromisesecurityhoweverusingthosetechniquesintherealworldmayviolatethelawortheuniversitysrulesanditmaybeunethicalundersomecircumstancesevenprobingforweaknessesmayresultinseverepenaltiesuptoandincludingexpulsioncivilfinesandjailtimeourpolicyincsfortyfourfortyisthatyoumustrespecttheprivacyandpropertyrightsofothersatalltimesorelseyouwillfailthecourseactinglawfullyandethicallyisyourresponsibilitycarefullyreadthecomputerfraudandabuseactcfaaoneofseveralfederallawsthatbroadlycriminalizescomputerintrusioniehackingunderstandwhatthelawprohibitsifindoubtwecanreferyoutoanattorneypleasereviewtheuniversitysacceptableusepolicyconcerningproperuseofinformationtechnologyaswellasthestudentcodeasmembersofthe"
-#plaintext = "ETHICSLAWANDUNIVERSITYPOLICIESWARNINGTODEFENDASYSTEMYOUNEEDTOBEABLETOTHINKLIKEANATTACKERANDTHATINCLUDESUNDERSTANDINGTECHNIQUESTHATCANBEUSEDTOCOMPROMISESECURITYHOWEVERUSINGTHOSETECHNIQUESINTHEREALWORLDMAYVIOLATETHELAWORTHEUNIVERSITYSRULESANDITMAYBEUNETHICALUNDERSOMECIRCUMSTANCESEVENPROBINGFORWEAKNESSESMAYRESULTINSEVEREPENALTIESUPTOANDINCLUDINGEXPULSIONCIVILFINESANDJAILTIMEOURPOLICYINCSFORTYFOURFORTYISTHATYOUMUSTRESPECTTHEPRIVACYANDPROPERTYRIGHTSOFOTHERSATALLTIMESORELSEYOUWILLFAILTHECOURSEACTINGLAWFULLYANDETHICALLYISYOURRESPONSIBILITYCAREFULLYREADTHECOMPUTERFRAUDANDABUSEACTCFAAONEOFSEVERALFEDERALLAWSTHATBROADLYCRIMINALIZESCOMPUTERINTRUSIONIEHACKINGUNDERSTANDWHATTHELAWPROHIBITSIFINDOUBTWECANREFERYOUTOANATTORNEYPLEASEREVIEWTHEUNIVERSITYSACCEPTABLEUSEPOLICYCONCERNINGPROPERUSEOFINFORMATIONTECHNOLOGYASWELLASTHESTUDENTCODEASMEMBERSOFTHE"
+
 relativeFreq = { "A": .08167, "B": .01492, "C": .02782, "D": .04253, "E": .12702, "F": .02228,
 "G": .02015, "H": .06094, "I": .06966, "J": .00153, "K": .00772, "L": .04025,
 "M": .02406, "N": .06749, "O": .07507, "P": .01929, "Q": .00095, "R": .05987,
@@ -83,75 +83,6 @@ print("\n")
 
 print("Given plaintext population variance")
 print("{:.4E}".format(findSubStrings(plaintext,1)))
-print("\n")
-
-#yz
-key = "YZ"
-YZ = encryptVigenere(plaintext, key)
-#print(YZ)
-print("YZ")
-#print(YZ)
-print("{:.4E}".format(findSubStrings(YZ,1)))
-#xyz
-key = "XYZ"
-XYZ = encryptVigenere(plaintext, key)
-print("XYZ")
-#print(XYZ)
-print("{:.4E}".format(findSubStrings(XYZ,1)))
-# wxyz 
-key = "WXYZ"
-WXYZ = encryptVigenere(plaintext, key)
-print("WXYZ")
-#print(WXYZ)
-print("{:.4E}".format(findSubStrings(WXYZ,1)))
-# vwxyz 
-key = "VWXYZ"
-VWXYZ = encryptVigenere(plaintext, key)
-print("VWXYZ")
-#print(VWXYZ)
-print("{:.4E}".format(findSubStrings(VWXYZ,1)))
-# uvwxyz,
-key = "UVWXYZ"
-UVWXYZ = encryptVigenere(plaintext, key)
-print("UVWXYZ")
-#print(UVWXYZ)
-print("{:.4E}".format(findSubStrings(UVWXYZ,1)))
-print("\n")
-
-#yz
-key = "YZ"
-YZ = encryptVigenere(plaintext, key)
-#print(YZ)
-freqAnalysisBlocks(YZ,2)
-#xyz
-key = "XYZ"
-XYZ = encryptVigenere(plaintext, key)
-freqAnalysisBlocks(XYZ,3)
-# wxyz 
-key = "WXYZ"
-WXYZ = encryptVigenere(plaintext, key)
-freqAnalysisBlocks(WXYZ,4)
-# vwxyz 
-key = "VWXYZ"
-VWXYZ = encryptVigenere(plaintext, key)
-freqAnalysisBlocks(VWXYZ,5)
-# uvwxyz,
-key = "UVWXYZ"
-UVWXYZ = encryptVigenere(plaintext, key)
-freqAnalysisBlocks(UVWXYZ,6)
-print("\n")
-
-key = "UVWXYZ"
-UVWXYZ = encryptVigenere(plaintext, key)
-print("using UVWXYZ encryption with all the other keys")
-print("key size 2")
-freqAnalysisBlocks(UVWXYZ,2)
-print("key size 3")
-freqAnalysisBlocks(UVWXYZ,3)
-print("key size 4")
-freqAnalysisBlocks(UVWXYZ,4)
-print("key size 5")
-freqAnalysisBlocks(UVWXYZ,5)
 print("\n")
 
 

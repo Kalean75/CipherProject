@@ -5,6 +5,11 @@ class Decrypt:
         self.printSS = printSS
         self.frequencyAnalysis = frequencyAnalysis
         self.cipherText = cipherText
+        self.relativeFrequencies = { "A": .08167, "B": .01492, "C": .02782, "D": .04253, "E": .12702, "F": .02228,
+"G": .02015, "H": .06094, "I": .06966, "J": .00153, "K": .00772, "L": .04025,
+"M": .02406, "N": .06749, "O": .07507, "P": .01929, "Q": .00095, "R": .05987,
+"S": .06327, "T": .09056, "U": .02758, "V": .00978, "W": .02360, "X": .00150,
+"Y": .01974, "Z": .00074 }
 
     # Print text
     def printtext(self,text):
@@ -43,8 +48,6 @@ class Decrypt:
     def findLengthBetweenSubstrings(self,substring):
         splitText = self.cipherText.split(substring)
         substringLengths = [None] * (len(splitText) - 2)
-        global printOccurence
-        global frequencyAnalysis
         count = 0
         firstIndex = True
         print("Lengths between occurences of substring:")
@@ -68,8 +71,8 @@ class Decrypt:
             for number in substringLengths[1::]:
                 commonDivisor = self.findGreatestCommonDenominator(commonDivisor,number)
             print("Greatest common Divisor between all lengths: " + str(commonDivisor))
-            print("Likely key length: 8")
-            frequencyAnalysis = True
+            print("Likely key length: " + str(commonDivisor))
+            self.frequencyAnalysis = True
             count = 0
             keyParse = []
             while count < commonDivisor:
@@ -98,10 +101,9 @@ class Decrypt:
             for key in dict.get("KeyLetter"+str(keyLetterLength)):
                 for value in key:
                     dict["KeyLetter"+str(keyLetterLength)][value] /= sums
-            #print(dict["KeyLetter"+str(keyLetterLength)])
+            print(dict["KeyLetter"+str(keyLetterLength)])
             keyLetterLength += 1
             count+=1
-        print("Possible 'E' mappings:")
         keyLetterLength = 0
         index = 1
         for dictionary in dict.values():
@@ -140,7 +142,7 @@ class Decrypt:
         while numKeyLetters <= keylength:
             dict["KeyLetter" + str(numKeyLetters)] = {}
             numKeyLetters += 1
-        #print(dict)
+        print(dict)
         numKeyLetters = 1
         for word in arr:
             alphdict = { "A":0, "B": 0, "C": 0, "D": 0, "E": 0, "F": 0,"G": 0, "H": 0 , "I": 0, "J": 0, "K": 0, "L": 0,
