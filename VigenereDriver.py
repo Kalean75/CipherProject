@@ -1,10 +1,14 @@
 
+import tkinter as tk
+import tkinter.font as tkFont
 #ciphertext = "ELFMASBQDXISZMNMHIBFEFQIMEUVNGLMLRETHAZAQPPDOTEGDEDONLYVZJNWHCKBLPPQWDQZZGFFUKDWCIXWPZKKSIDYBGBATBUMOWFMYGFBPKYVELFHRHBMDMESJLQMZVHSXMCPDIOWKJKLOVFGOWCBSIOOPAYVDEZWJYKORVFGOAYVHMMZJGDAEEORWYKQYWUYQOKQEXISZMNMCIUINFCBZLJGWHKZEQFBPORMCIVDKFOVEISWJYKVOGMCOAXOELFRKGBPPMTDNGWXEPZUNSLJPHCMPOYUPRXVKXYZNIIWIAXBZXISXSDPCSPAWFNASSWSDACPPEEWJLRMESJZALDPPCESISXLXSOSUGGMOXPXWUUQPXSSAZYZYWBMEFQBSEUHDWNCOITKEXOJFROMYDKQXIEVAOKARSPRBGBQEFFTKJOWYIPTPZOBSYHGQJSVLXFGKFDPPHVRAKBCRWBMEFQMGISHDMCBZHFOZTOIEWMSXGGAVMCSSAVLPVFRPZOLFHFQKFFQYGFGPZOUELBHPZOGSEWSPZOECSOULWBAZRBGDWSAYXNONJSMOEORYSXBASTGETVGASTGAKCBSIBAKMXBZJNCJWIBSIZOOCPWCPPCGAXOLVPIJVDPPJJFOLDPFKSSWDSHPWUVAQRIGINOZWKUTWUOGWKVOQVGPZKDPXISSJYVRPFPKOCSTVFUWJNTPWTHDWIJCIBYKFOWQLJGXSDPCSPAPAVMDFFTKJOTPEWWJYDPPHVRAUKTWWBTPWBBSINGWQSVREUZASCBTENVKMCMMVPYAFDPPHVRAEOMEWVDSADPSMTPKOVQYKUSWEKBELFZKUKTLPMSUSXLEEMYOLYBSINOXGEBSMTJEGVMYXFBYGEVEISKWDDMCWPPYZKSCIBQPKGQELBBCWBIYHWSJYOIYGFCJZSAXMORKXDMYWQSWCSVRSGVEKDQXITSNNOLTRWWALXIXXPFADKBPXPHDWSADYFGHGGETXUSZLRMZHPFAVYVLPERKFXGVISOXSDAZWPTPWXMYXFFEFQKZRWSNKKBTSOGDSVNHEZHDJYCRLQWLWCQYFVHEKZZZQQHHQDWWHZCQSBMZYUCBQYCCIMSIWXBMCXOHLOZ"
 #defKey = "LEBOWSKI"
 printSubstrings = False
 printOccurence = False
 customCipher = False
 frequencyAnalysis = False
+decrypt = False
+encrypt = False
 
 # Help
 def Help():
@@ -48,7 +52,7 @@ def main():
     Flags()
     CommandMenu()
     
-def CommandMenu():
+def CommandMenu(pss,pO,cc,fa,ct,vdc,vec):
     from VigenereDecrypt import Decrypt as VD
     from VigenereEncrypt import Encrypt as VE
     f = open("cipher.txt")
@@ -58,10 +62,12 @@ def CommandMenu():
     if ciphertext == " ":
         ciphertext = "ELFMASBQDXISZMNMHIBFEFQIMEUVNGLMLRETHAZAQPPDOTEGDEDONLYVZJNWHCKBLPPQWDQZZGFFUKDWCIXWPZKKSIDYBGBATBUMOWFMYGFBPKYVELFHRHBMDMESJLQMZVHSXMCPDIOWKJKLOVFGOWCBSIOOPAYVDEZWJYKORVFGOAYVHMMZJGDAEEORWYKQYWUYQOKQEXISZMNMCIUINFCBZLJGWHKZEQFBPORMCIVDKFOVEISWJYKVOGMCOAXOELFRKGBPPMTDNGWXEPZUNSLJPHCMPOYUPRXVKXYZNIIWIAXBZXISXSDPCSPAWFNASSWSDACPPEEWJLRMESJZALDPPCESISXLXSOSUGGMOXPXWUUQPXSSAZYZYWBMEFQBSEUHDWNCOITKEXOJFROMYDKQXIEVAOKARSPRBGBQEFFTKJOWYIPTPZOBSYHGQJSVLXFGKFDPPHVRAKBCRWBMEFQMGISHDMCBZHFOZTOIEWMSXGGAVMCSSAVLPVFRPZOLFHFQKFFQYGFGPZOUELBHPZOGSEWSPZOECSOULWBAZRBGDWSAYXNONJSMOEORYSXBASTGETVGASTGAKCBSIBAKMXBZJNCJWIBSIZOOCPWCPPCGAXOLVPIJVDPPJJFOLDPFKSSWDSHPWUVAQRIGINOZWKUTWUOGWKVOQVGPZKDPXISSJYVRPFPKOCSTVFUWJNTPWTHDWIJCIBYKFOWQLJGXSDPCSPAPAVMDFFTKJOTPEWWJYDPPHVRAUKTWWBTPWBBSINGWQSVREUZASCBTENVKMCMMVPYAFDPPHVRAEOMEWVDSADPSMTPKOVQYKUSWEKBELFZKUKTLPMSUSXLEEMYOLYBSINOXGEBSMTJEGVMYXFBYGEVEISKWDDMCWPPYZKSCIBQPKGQELBBCWBIYHWSJYOIYGFCJZSAXMORKXDMYWQSWCSVRSGVEKDQXITSNNOLTRWWALXIXXPFADKBPXPHDWSADYFGHGGETXUSZLRMZHPFAVYVLPERKFXGVISOXSDAZWPTPWXMYXFFEFQKZRWSNKKBTSOGDSVNHEZHDJYCRLQWLWCQYFVHEKZZZQQHHQDWWHZCQSBMZYUCBQYCCIMSIWXBMCXOHLOZ"
         defKey="LEBOWSKI"
-    printSubstrings = False
-    printOccurence = False
-    customCipher = False
-    frequencyAnalysis = False
+    printSubstrings = pss
+    printOccurence = pO
+    customCipher = cc
+    frequencyAnalysis = fa
+    decrypt = vdc
+    encrypt = vec
     while(True):
         string = input()
         if string=="-po":
@@ -92,7 +98,7 @@ def CommandMenu():
             else:
                 customCipher = False
                 print("Using a default cipher: " + str(customCipher))
-        elif string=="-vdc":
+        elif string=="-vdc" or decrypt:
             Vd = VD(printSS = printSubstrings,printOccurrence = printOccurence, frequencyAnalysis = frequencyAnalysis, cipherText=ciphertext)
             if(customCipher):
                 print("Cipher is , ", newCipher)
@@ -107,7 +113,7 @@ def CommandMenu():
                 decryptedmessage= Vd.decryptVigenere(ciphertext=ciphertext,key=keyString)
                 print(decryptedmessage)
                 break
-        elif string == "-ec":
+        elif string == "-ec" or encrypt:
             Ve = VE()
             MessageToEncrypt = cleanCipher(input("enter your message "))
             keyString = input("Enter the key ")
@@ -126,6 +132,189 @@ def cleanCipher(cipherText):
         return newText
     return cipherText
 
+class App:
+    printSubstrings = False
+    printOccurence = False
+    customCipher = False
+    frequencyAnalysis = False
+    decrypt = False
+    encrypt = False
+    def __init__(self, root):
+        printSubstrings = False
+        printOccurence = False
+        customCipher = False
+        frequencyAnalysis = False
+        decrypt = False
+        encrypt = False
+        #setting title
+        root.title("Cipher App")
+        #setting window size
+        width=600
+        height=500
+        screenwidth = root.winfo_screenwidth()
+        screenheight = root.winfo_screenheight()
+        alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
+        root.geometry(alignstr)
+        root.resizable(width=False, height=False)
+
+        GLineEdit_713=tk.Entry(root)
+        GLineEdit_713["borderwidth"] = "1px"
+        ft = tkFont.Font(family='Times',size=10)
+        GLineEdit_713["font"] = ft
+        GLineEdit_713["fg"] = "#333333"
+        GLineEdit_713["justify"] = "center"
+        GLineEdit_713["text"] = "Key"
+        GLineEdit_713.place(x=180,y=250,width=250,height=30)
+
+        GMessage_192=tk.Message(root)
+        ft = tkFont.Font(family='Times',size=10)
+        GMessage_192["font"] = ft
+        GMessage_192["fg"] = "#333333"
+        GMessage_192["justify"] = "center"
+        GMessage_192["text"] = ""
+        GMessage_192.place(x=50,y=20,width=489,height=174)
+
+        GLineEdit_593=tk.Entry(root)
+        GLineEdit_593["borderwidth"] = "1px"
+        ft = tkFont.Font(family='Times',size=10)
+        GLineEdit_593["font"] = ft
+        GLineEdit_593["fg"] = "#333333"
+        GLineEdit_593["justify"] = "center"
+        GLineEdit_593["text"] = "Message"
+        GLineEdit_593.place(x=180,y=220,width=249,height=30)
+
+        keyLabel=tk.Label(root)
+        ft = tkFont.Font(family='Times',size=10)
+        keyLabel["font"] = ft
+        keyLabel["fg"] = "#333333"
+        keyLabel["justify"] = "center"
+        keyLabel["text"] = "Key"
+        keyLabel.place(x=110,y=250,width=70,height=25)
+
+        textLabel=tk.Label(root)
+        ft = tkFont.Font(family='Times',size=10)
+        textLabel["font"] = ft
+        textLabel["fg"] = "#333333"
+        textLabel["justify"] = "center"
+        textLabel["text"] = "Text"
+        textLabel.place(x=110,y=220,width=70,height=25)
+
+        encryptRadio=tk.Radiobutton(root)
+        ft = tkFont.Font(family='Times',size=10)
+        encryptRadio["font"] = ft
+        encryptRadio["fg"] = "#333333"
+        encryptRadio["justify"] = "center"
+        encryptRadio["text"] = "Encrypt"
+        encryptRadio.place(x=170,y=290,width=85,height=25)
+        encryptRadio["command"] = self.encryptCommand
+
+        decryptRadio=tk.Radiobutton(root)
+        ft = tkFont.Font(family='Times',size=10)
+        decryptRadio["font"] = ft
+        decryptRadio["fg"] = "#333333"
+        decryptRadio["justify"] = "center"
+        decryptRadio["text"] = "Decrypt"
+        decryptRadio.place(x=360,y=290,width=85,height=25)
+        decryptRadio["command"] = self.decryptCommand
+
+        GoButton=tk.Button(root)
+        GoButton["bg"] = "#f0f0f0"
+        ft = tkFont.Font(family='Times',size=10)
+        GoButton["font"] = ft
+        GoButton["fg"] = "#000000"
+        GoButton["justify"] = "center"
+        GoButton["text"] = "Go!"
+        GoButton.place(x=270,y=430,width=70,height=25)
+        GoButton["command"] = self.GoButton_command
+
+        CCiphCheckBox=tk.Checkbutton(root)
+        ft = tkFont.Font(family='Times',size=10)
+        CCiphCheckBox["font"] = ft
+        CCiphCheckBox["fg"] = "#333333"
+        CCiphCheckBox["justify"] = "center"
+        CCiphCheckBox["text"] = "Custom Cipher"
+        CCiphCheckBox.place(x=60,y=340,width=109,height=30)
+        CCiphCheckBox["offvalue"] = "0"
+        CCiphCheckBox["onvalue"] = "1"
+        CCiphCheckBox["command"] = self.CCiphCheckBox_command
+
+        PSSCheckBox=tk.Checkbutton(root)
+        ft = tkFont.Font(family='Times',size=10)
+        PSSCheckBox["font"] = ft
+        PSSCheckBox["fg"] = "#333333"
+        PSSCheckBox["justify"] = "center"
+        PSSCheckBox["text"] = "Print SubStrings"
+        PSSCheckBox.place(x=190,y=340,width=128,height=30)
+        PSSCheckBox["offvalue"] = "0"
+        PSSCheckBox["onvalue"] = "1"
+        PSSCheckBox["command"] = self.PSSCheckBox_command
+
+        FSSCheckBox=tk.Checkbutton(root)
+        ft = tkFont.Font(family='Times',size=10)
+        FSSCheckBox["font"] = ft
+        FSSCheckBox["fg"] = "#333333"
+        FSSCheckBox["justify"] = "center"
+        FSSCheckBox["text"] = "Find SubStrings"
+        FSSCheckBox.place(x=340,y=340,width=133,height=30)
+        FSSCheckBox["offvalue"] = "0"
+        FSSCheckBox["onvalue"] = "1"
+        FSSCheckBox["command"] = self.FSSCheckBox_command
+
+        FKeyCheckBox=tk.Checkbutton(root)
+        ft = tkFont.Font(family='Times',size=10)
+        FKeyCheckBox["font"] = ft
+        FKeyCheckBox["fg"] = "#333333"
+        FKeyCheckBox["justify"] = "center"
+        FKeyCheckBox["text"] = "Find Key"
+        FKeyCheckBox.place(x=510,y=340,width=70,height=25)
+        FKeyCheckBox["offvalue"] = "0"
+        FKeyCheckBox["onvalue"] = "1"
+        FKeyCheckBox["command"] = self.FKeyCheckbox_command
+
+    def encryptCommand(self):
+        global encrypt
+        if(ecrypt):
+             ecrypt = True
+        else:
+             ecrypt = False
+
+
+    def decryptCommand(self):
+        global decrypt
+        if(decrypt):
+             decrypt = True
+        else:
+             decrypt = False
+
+
+    def GoButton_command(self):
+        CommandMenu(printSubstrings,printOccurence,customCipher, frequencyAnalysis,decrypt,encrypt)
+
+
+    def CCiphCheckBox_command(self):
+        global customCipher
+        if(customCipher):
+            customCipher = False
+        else:
+             customCipher = True
+
+
+    def PSSCheckBox_command(self):
+        global printSubstrings
+        if(printSubstrings):
+            printSubstrings = False
+        else:
+             printSubstrings = True
+
+
+    def FSSCheckBox_command(self):
+        print("command")
+
+
+    def FKeyCheckbox_command(self):
+        print("command")
 
 if __name__ == "__main__":
-    main()
+    root = tk.Tk()
+    app = App(root)
+    root.mainloop()
