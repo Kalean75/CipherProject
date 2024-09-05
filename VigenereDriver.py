@@ -9,6 +9,8 @@ customCipher = False
 frequencyAnalysis = False
 decrypt = False
 encrypt = False
+cipherText = " "
+key = " "
 
 # Help
 def Help():
@@ -50,18 +52,20 @@ def main():
     
     Help()
     Flags()
-    CommandMenu()
+    CommandMenu(printSubstrings,printOccurence,True, frequencyAnalysis,False,decrypt,encrypt)
     
 def CommandMenu(pss,pO,cc,fa,ct,vdc,vec):
     from VigenereDecrypt import Decrypt as VD
     from VigenereEncrypt import Encrypt as VE
-    f = open("cipher.txt")
-    ciphertextList = f.readlines()
-    ciphertext = ciphertextList[2].strip()
-    defKey = ciphertextList[1].strip()
-    if ciphertext == " ":
-        ciphertext = "ELFMASBQDXISZMNMHIBFEFQIMEUVNGLMLRETHAZAQPPDOTEGDEDONLYVZJNWHCKBLPPQWDQZZGFFUKDWCIXWPZKKSIDYBGBATBUMOWFMYGFBPKYVELFHRHBMDMESJLQMZVHSXMCPDIOWKJKLOVFGOWCBSIOOPAYVDEZWJYKORVFGOAYVHMMZJGDAEEORWYKQYWUYQOKQEXISZMNMCIUINFCBZLJGWHKZEQFBPORMCIVDKFOVEISWJYKVOGMCOAXOELFRKGBPPMTDNGWXEPZUNSLJPHCMPOYUPRXVKXYZNIIWIAXBZXISXSDPCSPAWFNASSWSDACPPEEWJLRMESJZALDPPCESISXLXSOSUGGMOXPXWUUQPXSSAZYZYWBMEFQBSEUHDWNCOITKEXOJFROMYDKQXIEVAOKARSPRBGBQEFFTKJOWYIPTPZOBSYHGQJSVLXFGKFDPPHVRAKBCRWBMEFQMGISHDMCBZHFOZTOIEWMSXGGAVMCSSAVLPVFRPZOLFHFQKFFQYGFGPZOUELBHPZOGSEWSPZOECSOULWBAZRBGDWSAYXNONJSMOEORYSXBASTGETVGASTGAKCBSIBAKMXBZJNCJWIBSIZOOCPWCPPCGAXOLVPIJVDPPJJFOLDPFKSSWDSHPWUVAQRIGINOZWKUTWUOGWKVOQVGPZKDPXISSJYVRPFPKOCSTVFUWJNTPWTHDWIJCIBYKFOWQLJGXSDPCSPAPAVMDFFTKJOTPEWWJYDPPHVRAUKTWWBTPWBBSINGWQSVREUZASCBTENVKMCMMVPYAFDPPHVRAEOMEWVDSADPSMTPKOVQYKUSWEKBELFZKUKTLPMSUSXLEEMYOLYBSINOXGEBSMTJEGVMYXFBYGEVEISKWDDMCWPPYZKSCIBQPKGQELBBCWBIYHWSJYOIYGFCJZSAXMORKXDMYWQSWCSVRSGVEKDQXITSNNOLTRWWALXIXXPFADKBPXPHDWSADYFGHGGETXUSZLRMZHPFAVYVLPERKFXGVISOXSDAZWPTPWXMYXFFEFQKZRWSNKKBTSOGDSVNHEZHDJYCRLQWLWCQYFVHEKZZZQQHHQDWWHZCQSBMZYUCBQYCCIMSIWXBMCXOHLOZ"
-        defKey="LEBOWSKI"
+    f = open("CipherProject\cipher.txt")
+    # ciphertextList = f.readlines()
+    # ciphertext = ciphertextList[2].strip()
+    # defKey = ciphertextList[1].strip()
+    global cipherText
+    global key
+    if cipherText == " ":
+        cipherText = "ELFMASBQDXISZMNMHIBFEFQIMEUVNGLMLRETHAZAQPPDOTEGDEDONLYVZJNWHCKBLPPQWDQZZGFFUKDWCIXWPZKKSIDYBGBATBUMOWFMYGFBPKYVELFHRHBMDMESJLQMZVHSXMCPDIOWKJKLOVFGOWCBSIOOPAYVDEZWJYKORVFGOAYVHMMZJGDAEEORWYKQYWUYQOKQEXISZMNMCIUINFCBZLJGWHKZEQFBPORMCIVDKFOVEISWJYKVOGMCOAXOELFRKGBPPMTDNGWXEPZUNSLJPHCMPOYUPRXVKXYZNIIWIAXBZXISXSDPCSPAWFNASSWSDACPPEEWJLRMESJZALDPPCESISXLXSOSUGGMOXPXWUUQPXSSAZYZYWBMEFQBSEUHDWNCOITKEXOJFROMYDKQXIEVAOKARSPRBGBQEFFTKJOWYIPTPZOBSYHGQJSVLXFGKFDPPHVRAKBCRWBMEFQMGISHDMCBZHFOZTOIEWMSXGGAVMCSSAVLPVFRPZOLFHFQKFFQYGFGPZOUELBHPZOGSEWSPZOECSOULWBAZRBGDWSAYXNONJSMOEORYSXBASTGETVGASTGAKCBSIBAKMXBZJNCJWIBSIZOOCPWCPPCGAXOLVPIJVDPPJJFOLDPFKSSWDSHPWUVAQRIGINOZWKUTWUOGWKVOQVGPZKDPXISSJYVRPFPKOCSTVFUWJNTPWTHDWIJCIBYKFOWQLJGXSDPCSPAPAVMDFFTKJOTPEWWJYDPPHVRAUKTWWBTPWBBSINGWQSVREUZASCBTENVKMCMMVPYAFDPPHVRAEOMEWVDSADPSMTPKOVQYKUSWEKBELFZKUKTLPMSUSXLEEMYOLYBSINOXGEBSMTJEGVMYXFBYGEVEISKWDDMCWPPYZKSCIBQPKGQELBBCWBIYHWSJYOIYGFCJZSAXMORKXDMYWQSWCSVRSGVEKDQXITSNNOLTRWWALXIXXPFADKBPXPHDWSADYFGHGGETXUSZLRMZHPFAVYVLPERKFXGVISOXSDAZWPTPWXMYXFFEFQKZRWSNKKBTSOGDSVNHEZHDJYCRLQWLWCQYFVHEKZZZQQHHQDWWHZCQSBMZYUCBQYCCIMSIWXBMCXOHLOZ"
+        key="LEBOWSKI"
     printSubstrings = pss
     printOccurence = pO
     customCipher = cc
@@ -69,28 +73,28 @@ def CommandMenu(pss,pO,cc,fa,ct,vdc,vec):
     decrypt = vdc
     encrypt = vec
     while(True):
-        string = input()
-        if string=="-po":
+        #string = sys.stdin.read().strip
+        if pO: #string=="-po":
             if not printOccurence:
                 printOccurence = True
             else:
                     printOccurence = False
                     print("Print occurrences of substrings of size greater than 1: " + str(printOccurence))
-        if string=="-pss":
+        if pss: #string=="-pss":
             if not printSubstrings:
                 printSubstrings = True
             else:
                 printSubstrings = False
                 print("Print All substrings of size: " + str(printSubstrings))
-        elif string=="-h":
-                    Help()
-        elif string=="-fss":
-                    Vd = VD(printSS = printSubstrings,printOccurrence = printOccurence, frequencyAnalysis = frequencyAnalysis, cipherText=ciphertext)
-                    inputss(Vd,ciphertext)
-                    break
-        elif string=="-f":
+        # elif h: string=="-h":
+        #             Help()
+        # elif string=="-fss":
+        #             Vd = VD(printSS = printSubstrings,printOccurrence = printOccurence, frequencyAnalysis = frequencyAnalysis, cipherText=ciphertext)
+        #             inputss(Vd,ciphertext)
+        #             break
+        if f: #string=="-f":
                     Flags()
-        elif string=="-cc":
+        if cc: #string=="-cc":
             if not customCipher:
                 customCipher = True
                 print("Using a custom cipher: " + str(customCipher))
@@ -98,8 +102,9 @@ def CommandMenu(pss,pO,cc,fa,ct,vdc,vec):
             else:
                 customCipher = False
                 print("Using a default cipher: " + str(customCipher))
-        elif string=="-vdc" or decrypt:
-            Vd = VD(printSS = printSubstrings,printOccurrence = printOccurence, frequencyAnalysis = frequencyAnalysis, cipherText=ciphertext)
+        if decrypt is True: #string=="-vdc":
+            print("Decrypting")
+            Vd = VD(printSS = printSubstrings,printOccurrence = printOccurence, frequencyAnalysis = frequencyAnalysis, cipherText=cipherText)
             if(customCipher):
                 print("Cipher is , ", newCipher)
                 keyString = input("Enter the key ")
@@ -107,45 +112,39 @@ def CommandMenu(pss,pO,cc,fa,ct,vdc,vec):
                 print(decryptedmessage)
                 break
             else:
-                ciphertext = cleanCipher(ciphertext)
-                keyString = defKey
+                cipherText = cleanCipher(cipherText)
+                keyString = key
                 #keyString = input("Enter the key ")
-                decryptedmessage= Vd.decryptVigenere(ciphertext=ciphertext,key=keyString)
+                decryptedmessage= Vd.decryptVigenere(ciphertext=cipherText,key=keyString)
                 print(decryptedmessage)
                 break
-        elif string == "-ec" or encrypt:
+        elif encrypt is True: #string == "-ec":
+            print("Encrypting")
             Ve = VE()
-            MessageToEncrypt = cleanCipher(input("enter your message "))
-            keyString = input("Enter the key ")
+            # MessageToEncrypt = cleanCipher(input("enter your message "))
+            MessageToEncrypt = cleanCipher(cipherText)
+            # keyString = input("Enter the key ")
+            keyString = key
             encryptedmessage = Ve.encryptVigenere(ciphertext=MessageToEncrypt,key=keyString)
             print("Original Message ", MessageToEncrypt)
             print("Encrypted Message ", encryptedmessage)
         else:
             print("Please enter a valid Command")
+        break
 
 def cleanCipher(cipherText):
     newText = ""
     for i in cipherText:
-        if i is not " ":
+        if i != " ":
             newText+= i
     if(len(newText) > 1):
         return newText
     return cipherText
 
+
 class App:
-    printSubstrings = False
-    printOccurence = False
-    customCipher = False
-    frequencyAnalysis = False
-    decrypt = False
-    encrypt = False
     def __init__(self, root):
-        printSubstrings = False
-        printOccurence = False
-        customCipher = False
-        frequencyAnalysis = False
-        decrypt = False
-        encrypt = False
+        self.selectedOption = tk.IntVar()
         #setting title
         root.title("Cipher App")
         #setting window size
@@ -157,31 +156,33 @@ class App:
         root.geometry(alignstr)
         root.resizable(width=False, height=False)
 
-        GLineEdit_713=tk.Entry(root)
-        GLineEdit_713["borderwidth"] = "1px"
-        ft = tkFont.Font(family='Times',size=10)
-        GLineEdit_713["font"] = ft
-        GLineEdit_713["fg"] = "#333333"
-        GLineEdit_713["justify"] = "center"
-        GLineEdit_713["text"] = "Key"
-        GLineEdit_713.place(x=180,y=250,width=250,height=30)
+        # GMessage_192=tk.Message(root)
+        # ft = tkFont.Font(family='Times',size=10)
+        # GMessage_192["font"] = ft
+        # GMessage_192["fg"] = "#333333"
+        # GMessage_192["justify"] = "center"
+        # GMessage_192["text"] = ""
+        # GMessage_192.place(x=50,y=20,width=489,height=174)
 
-        GMessage_192=tk.Message(root)
+        # Message
+        self.GLineEdit_593=tk.Entry(root)
+        self.GLineEdit_593["borderwidth"] = "1px"
         ft = tkFont.Font(family='Times',size=10)
-        GMessage_192["font"] = ft
-        GMessage_192["fg"] = "#333333"
-        GMessage_192["justify"] = "center"
-        GMessage_192["text"] = ""
-        GMessage_192.place(x=50,y=20,width=489,height=174)
-
-        GLineEdit_593=tk.Entry(root)
-        GLineEdit_593["borderwidth"] = "1px"
+        self.GLineEdit_593["font"] = ft
+        self.GLineEdit_593["fg"] = "#333333"
+        self.GLineEdit_593["justify"] = "center"
+        self.GLineEdit_593["text"] = "Message"
+        self.GLineEdit_593.place(x=180,y=220,width=249,height=30)
+        
+        # Key
+        self.GLineEdit_713=tk.Entry(root)
+        self.GLineEdit_713["borderwidth"] = "1px"
         ft = tkFont.Font(family='Times',size=10)
-        GLineEdit_593["font"] = ft
-        GLineEdit_593["fg"] = "#333333"
-        GLineEdit_593["justify"] = "center"
-        GLineEdit_593["text"] = "Message"
-        GLineEdit_593.place(x=180,y=220,width=249,height=30)
+        self.GLineEdit_713["font"] = ft
+        self.GLineEdit_713["fg"] = "#333333"
+        self.GLineEdit_713["justify"] = "center"
+        self.GLineEdit_713["text"] = "Key"
+        self.GLineEdit_713.place(x=180,y=250,width=250,height=30)
 
         keyLabel=tk.Label(root)
         ft = tkFont.Font(family='Times',size=10)
@@ -199,23 +200,23 @@ class App:
         textLabel["text"] = "Text"
         textLabel.place(x=110,y=220,width=70,height=25)
 
-        encryptRadio=tk.Radiobutton(root)
+        encryptRadio=tk.Radiobutton(root,variable=self.selectedOption,value=1)
         ft = tkFont.Font(family='Times',size=10)
         encryptRadio["font"] = ft
         encryptRadio["fg"] = "#333333"
         encryptRadio["justify"] = "center"
         encryptRadio["text"] = "Encrypt"
         encryptRadio.place(x=170,y=290,width=85,height=25)
-        encryptRadio["command"] = self.encryptCommand
+        encryptRadio["command"] = self.encryptRadio_Command
 
-        decryptRadio=tk.Radiobutton(root)
+        decryptRadio=tk.Radiobutton(root,variable=self.selectedOption,value=2)
         ft = tkFont.Font(family='Times',size=10)
         decryptRadio["font"] = ft
         decryptRadio["fg"] = "#333333"
         decryptRadio["justify"] = "center"
         decryptRadio["text"] = "Decrypt"
         decryptRadio.place(x=360,y=290,width=85,height=25)
-        decryptRadio["command"] = self.decryptCommand
+        decryptRadio["command"] = self.decryptRadio_Command
 
         GoButton=tk.Button(root)
         GoButton["bg"] = "#f0f0f0"
@@ -271,29 +272,33 @@ class App:
         FKeyCheckBox["onvalue"] = "1"
         FKeyCheckBox["command"] = self.FKeyCheckbox_command
 
-    def encryptCommand(self):
+    def encryptRadio_Command(self):
         global encrypt
-        if(ecrypt):
-             ecrypt = True
+        if(encrypt is False):
+             encrypt = True
         else:
-             ecrypt = False
+             encrypt = False
 
 
-    def decryptCommand(self):
+    def decryptRadio_Command(self):
         global decrypt
-        if(decrypt):
+        if(decrypt is False):
              decrypt = True
         else:
              decrypt = False
 
 
     def GoButton_command(self):
-        CommandMenu(printSubstrings,printOccurence,customCipher, frequencyAnalysis,decrypt,encrypt)
+        global cipherText
+        cipherText = self.GLineEdit_593.get()
+        global key
+        key = self.GLineEdit_713.get()
+        CommandMenu(printSubstrings,printOccurence,customCipher, frequencyAnalysis,False,decrypt,encrypt)
 
 
     def CCiphCheckBox_command(self):
         global customCipher
-        if(customCipher):
+        if(customCipher is True):
             customCipher = False
         else:
              customCipher = True
@@ -301,7 +306,7 @@ class App:
 
     def PSSCheckBox_command(self):
         global printSubstrings
-        if(printSubstrings):
+        if(printSubstrings is True):
             printSubstrings = False
         else:
              printSubstrings = True
