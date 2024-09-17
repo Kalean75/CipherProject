@@ -1,89 +1,120 @@
 class Decrypt:
     import re
-    def __init__(self, printSS,printOccurrence,frequencyAnalysis, cipherText):
+
+    def __init__(self, printSS, printOccurrence, frequencyAnalysis, cipherText):
         self.printOccurr = printOccurrence
         self.printSS = printSS
         self.frequencyAnalysis = frequencyAnalysis
         self.cipherText = cipherText
-        self.relativeFrequencies = { "A": .08167, "B": .01492, "C": .02782, "D": .04253, "E": .12702, "F": .02228,
-"G": .02015, "H": .06094, "I": .06966, "J": .00153, "K": .00772, "L": .04025,
-"M": .02406, "N": .06749, "O": .07507, "P": .01929, "Q": .00095, "R": .05987,
-"S": .06327, "T": .09056, "U": .02758, "V": .00978, "W": .02360, "X": .00150,
-"Y": .01974, "Z": .00074 }
+        self.relativeFrequencies = {
+            "A": 0.08167,
+            "B": 0.01492,
+            "C": 0.02782,
+            "D": 0.04253,
+            "E": 0.12702,
+            "F": 0.02228,
+            "G": 0.02015,
+            "H": 0.06094,
+            "I": 0.06966,
+            "J": 0.00153,
+            "K": 0.00772,
+            "L": 0.04025,
+            "M": 0.02406,
+            "N": 0.06749,
+            "O": 0.07507,
+            "P": 0.01929,
+            "Q": 0.00095,
+            "R": 0.05987,
+            "S": 0.06327,
+            "T": 0.09056,
+            "U": 0.02758,
+            "V": 0.00978,
+            "W": 0.02360,
+            "X": 0.00150,
+            "Y": 0.01974,
+            "Z": 0.00074,
+        }
 
     # Print text
-    def printtext(self,text):
+    def printtext(self, text):
         print(text)
 
-    def parseText(self,text,keyLength,start):
-        #splitText = (text[0+i:keyLength+i] for i in range(0, len(text), keyLength))
-        #parse original ciphertext into blocks based on keyLength
-        newText = text[start:len(text):keyLength]
+    def parseText(self, text, keyLength, start):
+        # splitText = (text[0+i:keyLength+i] for i in range(0, len(text), keyLength))
+        # parse original ciphertext into blocks based on keyLength
+        newText = text[start : len(text) : keyLength]
         return newText
-    #finds substrings of length n in string text
-    def findSubStrings(self,text,n):
-        #parse for every n character word that exists
-        nchars = [text[i:i+n] for i in range(0,len(text),1)]
+
+    # finds substrings of length n in string text
+    def findSubStrings(self, text, n):
+        # parse for every n character word that exists
+        nchars = [text[i : i + n] for i in range(0, len(text), 1)]
         count = 0
         num = 23
         for string in nchars:
-            count+=1
+            count += 1
             if self.printSS:
-                if num%count==0:
+                if num % count == 0:
                     print(string + "\n")
-                    num+=23
+                    num += 23
                 else:
-                    print(string, end = " ")
+                    print(string, end=" ")
         self.countSubstrings(nchars)
         return
 
-    #Finds greatest commondenominator
-    def findGreatestCommonDenominator(self,firstNum,secondNum):
-        if (secondNum == 0):
+    # Finds greatest commondenominator
+    def findGreatestCommonDenominator(self, firstNum, secondNum):
+        if secondNum == 0:
             return firstNum
         else:
             return self.findGreatestCommonDenominator(secondNum, firstNum % secondNum)
 
-    #finds the distance between occurences of the most common substring
-    def findLengthBetweenSubstrings(self,substring):
+    # finds the distance between occurences of the most common substring
+    def findLengthBetweenSubstrings(self, substring):
         splitText = self.cipherText.split(substring)
         substringLengths = [None] * (len(splitText) - 2)
         count = 0
         firstIndex = True
         print("Lengths between occurences of substring:")
         for length in splitText:
-            #ignore first split, it won't contain substring
+            # ignore first split, it won't contain substring
             if firstIndex:
                 firstIndex = False
                 continue
-            if count == len(splitText) -2:
+            if count == len(splitText) - 2:
                 break
-            #add substring length. We want to know length between.
+            # add substring length. We want to know length between.
             substringLengths[count] = len(length) + len(substring)
-            #ignore last line, it won't contain substring
-            count+=1
-            print(len(length) +len(substring))#- len(substring))
+            # ignore last line, it won't contain substring
+            count += 1
+            print(len(length) + len(substring))  # - len(substring))
         if len(substringLengths) < 2:
-            print("Not enough occurrences to determine likely key length. checking with substring length " + str(len(substring)-1))
-            self.findSubStrings(self.cipherText,len(substring)-1)
+            print(
+                "Not enough occurrences to determine likely key length. checking with substring length "
+                + str(len(substring) - 1)
+            )
+            self.findSubStrings(self.cipherText, len(substring) - 1)
         else:
             commonDivisor = substringLengths[0]
             for number in substringLengths[1::]:
-                commonDivisor = self.findGreatestCommonDenominator(commonDivisor,number)
+                commonDivisor = self.findGreatestCommonDenominator(
+                    commonDivisor, number
+                )
             print("Greatest common Divisor between all lengths: " + str(commonDivisor))
             print("Likely key length: " + str(commonDivisor))
             self.frequencyAnalysis = True
             count = 0
             keyParse = []
             while count < commonDivisor:
-                keyParse.append(self.parseText(self.cipherText,commonDivisor,count))
-                count +=1
+                keyParse.append(self.parseText(self.cipherText, commonDivisor, count))
+                count += 1
 
-            self.countFrequencyinBlocks(keyParse,commonDivisor)
-    
+            self.countFrequencyinBlocks(keyParse, commonDivisor)
+
         return
-    #compares text occurrences with common english letter occurrences
-    def commonOccurencesEnglish(self,dict,keylength):
+
+    # compares text occurrences with common english letter occurrences
+    def commonOccurencesEnglish(self, dict, keylength):
         if not dict:
             return
         keyLetterList = []
@@ -93,17 +124,17 @@ class Decrypt:
         val = 0
         count = 0
         while count < keylength:
-            for value in dict.get("KeyLetter"+str(keyLetterLength)).values():
+            for value in dict.get("KeyLetter" + str(keyLetterLength)).values():
                 val += value
             sums = val
             val = 0
-            #print(sums)
-            for key in dict.get("KeyLetter"+str(keyLetterLength)):
+            # print(sums)
+            for key in dict.get("KeyLetter" + str(keyLetterLength)):
                 for value in key:
-                    dict["KeyLetter"+str(keyLetterLength)][value] /= sums
-            print(dict["KeyLetter"+str(keyLetterLength)])
+                    dict["KeyLetter" + str(keyLetterLength)][value] /= sums
+            print(dict["KeyLetter" + str(keyLetterLength)])
             keyLetterLength += 1
-            count+=1
+            count += 1
         keyLetterLength = 0
         index = 1
         for dictionary in dict.values():
@@ -118,10 +149,10 @@ class Decrypt:
         print("\n")
         self.findPossibleKeys(keyLetterList)
 
-    def findPossibleKeys(self,list):
+    def findPossibleKeys(self, list):
         count = 0
         index = 0
-        #print(list[7][1])
+        # print(list[7][1])
         for lists in list:
             total = len(lists)
             index = 0
@@ -133,11 +164,37 @@ class Decrypt:
         for lists in list:
             print(lists)
 
-    def countFrequencyinBlocks(self,arr,keylength):
-        #print(arr)
+    def countFrequencyinBlocks(self, arr, keylength):
+        # print(arr)
         dict = {}
-        alphdict = { "A":0, "B": 0, "C": 0, "D": 0, "E": 0, "F": 0,"G": 0, "H": 0 , "I": 0, "J": 0, "K": 0, "L": 0,
-    "M": 0, "N": 0, "O": 0, "P": 0, "Q": 0, "R": 0,"S": 0, "T": 0, "U": 0, "V": 0, "W": 0, "X": 0,"Y": 0, "Z": 0 }
+        alphdict = {
+            "A": 0,
+            "B": 0,
+            "C": 0,
+            "D": 0,
+            "E": 0,
+            "F": 0,
+            "G": 0,
+            "H": 0,
+            "I": 0,
+            "J": 0,
+            "K": 0,
+            "L": 0,
+            "M": 0,
+            "N": 0,
+            "O": 0,
+            "P": 0,
+            "Q": 0,
+            "R": 0,
+            "S": 0,
+            "T": 0,
+            "U": 0,
+            "V": 0,
+            "W": 0,
+            "X": 0,
+            "Y": 0,
+            "Z": 0,
+        }
         numKeyLetters = 1
         while numKeyLetters <= keylength:
             dict["KeyLetter" + str(numKeyLetters)] = {}
@@ -145,38 +202,64 @@ class Decrypt:
         print(dict)
         numKeyLetters = 1
         for word in arr:
-            alphdict = { "A":0, "B": 0, "C": 0, "D": 0, "E": 0, "F": 0,"G": 0, "H": 0 , "I": 0, "J": 0, "K": 0, "L": 0,
-    "M": 0, "N": 0, "O": 0, "P": 0, "Q": 0, "R": 0,"S": 0, "T": 0, "U": 0, "V": 0, "W": 0, "X": 0,"Y": 0, "Z": 0 }
+            alphdict = {
+                "A": 0,
+                "B": 0,
+                "C": 0,
+                "D": 0,
+                "E": 0,
+                "F": 0,
+                "G": 0,
+                "H": 0,
+                "I": 0,
+                "J": 0,
+                "K": 0,
+                "L": 0,
+                "M": 0,
+                "N": 0,
+                "O": 0,
+                "P": 0,
+                "Q": 0,
+                "R": 0,
+                "S": 0,
+                "T": 0,
+                "U": 0,
+                "V": 0,
+                "W": 0,
+                "X": 0,
+                "Y": 0,
+                "Z": 0,
+            }
             for char in word:
                 print(word)
                 alphdict[char] += 1
             dict["KeyLetter" + str(numKeyLetters)] = alphdict
             numKeyLetters += 1
 
-
-        self.commonOccurencesEnglish(dict,keylength)
+        self.commonOccurencesEnglish(dict, keylength)
         return
+
     # counts the number of each substring
-    def countSubstrings(self,arr):
+    def countSubstrings(self, arr):
         print("\n")
         dict = {}
         for word in arr:
             if word in dict:
-                dict[word]+=1
+                dict[word] += 1
             else:
                 dict[word] = 1
         highestcount = 0
         highestcountkey = ""
         num = 6
         count = 1
-        #Sort by occurrence
-        for key, value in sorted(dict.items(),key=lambda x:x[1], reverse=True):
+        # Sort by occurrence
+        for key, value in sorted(dict.items(), key=lambda x: x[1], reverse=True):
             if self.printOccurr:
-                    if num%count==0:
-                        print(key + ":" + str(value) , end = "\n")
-                        num+=6
-                    else:
-                        print(key + ":" + str(value), end = " ")
+                if num % count == 0:
+                    print(key + ":" + str(value), end="\n")
+                    num += 6
+                else:
+                    print(key + ":" + str(value), end=" ")
             if value > highestcount:
                 highestcount = value
                 highestcountkey = key
@@ -185,12 +268,12 @@ class Decrypt:
         self.findLengthBetweenSubstrings(highestcountkey)
         return
 
-    #Decrypts the cipherText with the given key   
-    def decryptVigenere(self,ciphertext, key):
-        decrypted = ''
+    # Decrypts the cipherText with the given key
+    def decryptVigenere(self, ciphertext, key):
+        decrypted = ""
         for i, ch in enumerate(ciphertext):
             decrypted += self.unshiftLetter(ch, key[i % len(key)])
-        
+
             f = open("cipherDecrypt.txt", "w")
             f.write("Ciphertext: " + ciphertext + "\n")
             f.write("key: " + key + "\n")
@@ -198,7 +281,7 @@ class Decrypt:
             f.close()
         return decrypted
 
-    def unshiftLetter(self,letter, keyLetter):
+    def unshiftLetter(self, letter, keyLetter):
         letter = ord(letter) - ord("A")
         keyLetter = ord(keyLetter) - ord("A")
         new = (letter - keyLetter) % 26
